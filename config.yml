@@ -1,0 +1,22 @@
+recipe: default.v1
+assistant_id: 20230303-132941-slow-interest
+language: zh
+
+pipeline:
+- name: "MitieNLP"
+  model: "jieba_dic/total_word_feature_extractor_zh.dat"
+- name: "JiebaTokenizer"
+  dictionary_path: "jieba_dic/dic"
+- name: "MitieEntityExtractor"
+- name: "EntitySynonymMapper"
+- name: "RegexFeaturizer"
+- name: "MitieFeaturizer"
+- name: "SklearnIntentClassifier"
+
+policies:
+  - name: RulePolicy
+    core_fallback_action_name: "action_default_fallback"
+    core_fallback_threshold: 0.3
+    enable_fallback_prediction: true
+    priority: 5
+    randomization_factor: 0.2
